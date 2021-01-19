@@ -1,17 +1,23 @@
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         Scanner sc = new Scanner(System.in);
-        StringBuilder sb = new StringBuilder();
         int N = sc.nextInt();
-        ArrayList<Integer> numList = new ArrayList<>();
-        for(int i=0; i<N; i++) numList.add(sc.nextInt());
-        Collections.sort(numList);
-        for(int num:numList) sb.append(num).append("\n");
-        System.out.println(sb);
+        int[][] numList = new int[N][2];
+        for(int i=0; i<N; i++){
+            numList[i][0] = sc.nextInt();
+            numList[i][1] = sc.nextInt();
+        }
+        Arrays.sort(numList, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                if(o1[1]==o2[1]) return o1[0]-o2[0];
+                return o1[1]-o2[1];
+            }
+        });
+        for(int[] num:numList)
+            System.out.println(num[0] + " " + num[1]);
     }
 }
