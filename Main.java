@@ -1,29 +1,29 @@
+import java.io.IOException;
+import java.util.Scanner;
+
 public class Main {
     private static int N;
-    private static int K;
-    private static long result;
-    private static int[] numList;
-    public static void main(String[] args){
-        Main app = new Main(args);
-        for(int i=0; i<N+1; i++) numList[i] = i;
-        app.solution(N, K, numList, 0);
-        System.out.println(result % 1000000000L);
+    private static int[] P;
+    private static int result;
+    public static void main(String[] args) throws IOException {
+        Scanner sc = new Scanner(System.in);
+        Main app = new Main(sc);
+        app.solution(N);
+        System.out.println(result);
+        /*
+            dp[n] = dp[n-i] + dp[i]
+        */
     }
-    public Main(String[] args){
-        N = Integer.parseInt(args[0]);
-        K = Integer.parseInt(args[1]);
-        numList = new int[N+1];
-        result = 0;
+    public Main(Scanner sc){
+        N = sc.nextInt();
+        P = new int[N+1];
+        for(int i=1;i<=N;i++) P[i]=Integer.parseInt(sc.next());
     }
 
-    public void solution(int targetSum, int elementNum, int[] usedNums, int seq){
-        if(targetSum < 0) return;
-        if(elementNum > 1)
-            for(int i:usedNums) solution(targetSum-i, elementNum - 1, usedNums, seq + 1);
-        else if(elementNum == 1 && targetSum <= N && hasElement(targetSum, usedNums)) result++;
-    }
-    public boolean hasElement(int element, int[] elements){
-        for(int i:elements) if(i==element) return true;
-        return false;
+    public void solution(int N){
+        for(int i=0; i<N; i++) {
+            result += P[i];
+            if(N>0) solution(N - i);
+        }
     }
 }
